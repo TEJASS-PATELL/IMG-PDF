@@ -4,6 +4,7 @@ import {
   AlertTriangle,
   ArrowDown,
   ArrowUp,
+  ArrowUpRight,
   Check,
   Crop,
   Download,
@@ -1164,7 +1165,7 @@ export default function App() {
 
   // Warm up the PDF library as soon as there is something to export.
   useEffect(() => {
-    if (hasImages) import('jspdf').catch(() => {});
+    if (hasImages) import('jspdf').catch(() => { });
   }, [hasImages]);
 
   useEffect(() => {
@@ -1439,15 +1440,15 @@ export default function App() {
       setNotice(
         overLimit
           ? {
-              type: 'warning',
-              text: `Downloaded ${finalName} at ${formatBytes(pdfBlob.size)}, over your ${formatBytes(
-                limitKb * 1024
-              )} limit. Raise the limit or remove pages.`,
-            }
+            type: 'warning',
+            text: `Downloaded ${finalName} at ${formatBytes(pdfBlob.size)}, over your ${formatBytes(
+              limitKb * 1024
+            )} limit. Raise the limit or remove pages.`,
+          }
           : {
-              type: 'success',
-              text: `Downloaded ${finalName}: ${formatBytes(pdfBlob.size)}, ${plural(total, 'page')}.`,
-            }
+            type: 'success',
+            text: `Downloaded ${finalName}: ${formatBytes(pdfBlob.size)}, ${plural(total, 'page')}.`,
+          }
       );
     } catch (err) {
       setNotice({
@@ -1583,9 +1584,9 @@ export default function App() {
                             active && 'is-active',
                             dragIndex === idx && 'is-dragging',
                             overIndex === idx &&
-                              dragIndex !== null &&
-                              dragIndex !== idx &&
-                              'is-drop-target'
+                            dragIndex !== null &&
+                            dragIndex !== idx &&
+                            'is-drop-target'
                           )}
                           draggable
                           onDragStart={(e) => {
@@ -1792,7 +1793,7 @@ export default function App() {
             <aside className="panel settings" aria-label="Export settings">
               <div className="settings-body">
                 <section className="group">
-                  
+
                   <div className="field">
                     <div className="field-row">
                       <label className="field-label" htmlFor="target-kb-input">
@@ -1835,7 +1836,7 @@ export default function App() {
                 </section>
 
                 <section className="group">
-                  
+
                   <Segmented
                     label="Format"
                     options={FORMAT_OPTIONS}
@@ -1873,7 +1874,7 @@ export default function App() {
                 </section>
 
                 <section className="group">
-                  
+
                   <div className="field">
                     <label className="field-label" htmlFor="pdf-filename">
                       File name
@@ -1956,6 +1957,21 @@ export default function App() {
           onClose={() => setCroppingId(null)}
         />
       )}
+
+      <aside className="project-callout" aria-label="More projects">
+        <span className="project-callout-text">
+          Only need to shrink image size without making a PDF? Check out my other project:
+        </span>
+        <a
+          href="https://image-compresser-nu.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-callout-link"
+        >
+          <span>Image Compressor</span>
+          <ArrowUpRight size={15} className="project-callout-icon" aria-hidden="true" />
+        </a>
+      </aside>
     </div>
   );
 }
